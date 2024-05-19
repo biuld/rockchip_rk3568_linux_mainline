@@ -3,4 +3,5 @@
 /archives
 /u-boot
 /kernel
-/deploy
+/deploy*
+/rootfs

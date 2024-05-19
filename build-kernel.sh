@@ -3,7 +3,7 @@
 ARCHIVE_DIR="archives"
 WORKDIR="$(pwd)"
 
-KERNEL_VERSION="linux-6.6.29"
+KERNEL_VERSION="linux-6.6.31"
 
 KERNEL_ARCHIVE="${KERNEL_VERSION}.tar.xz"
 
@@ -23,8 +23,11 @@ if [ ! -d "kernel" ]; then
     tar -xJf "${ARCHIVE_DIR}/${KERNEL_ARCHIVE}"
     mv "${KERNEL_VERSION}" kernel
 
+    git submodule update --init --recursive
+
     cd "${WORKDIR}/kernel"
-    for i in "${WORKDIR}/patches/patches-6.6/"*; do patch -Np1 <"${i}"; done
+    for i in "${WORKDIR}/patches/immortalwrt/target/linux/rockchip/patches-6.6/"*; do patch -Np1 <"${i}"; done
+    cp -rf "${WORKDIR}/patches/immortalwrt/target/linux/rockchip/files/." ./
     cp -rf "${WORKDIR}/patches/kernel-overlay/." ./
 
     cd "${WORKDIR}"
